@@ -14,7 +14,7 @@ import { GetNeighBoursProps, Neighbours } from './types';
 
 const App: FunctionComponent = () => {
   const dashboard = { columns: 50, rows: 30 };
-  const [paintIndex, setPaintIndexes] = useState<Array<number>>();
+  const [paintIndexes, setPaintIndexes] = useState<Array<number>>([]);
 
   const getNeighbours = ({
     currentCel,
@@ -53,6 +53,7 @@ const App: FunctionComponent = () => {
         celsPerRow,
       ),
     };
+
     setPaintIndexes([
       cellNeighbours.top,
       cellNeighbours.bottom,
@@ -73,15 +74,15 @@ const App: FunctionComponent = () => {
             // eslint-disable-next-line react/no-array-index-key
             <Cel
               onClickHandler={() => {
-                getNeighbours({
-                  currentCel: i + dashboard.columns * z,
-                  celsPerRow: dashboard.columns,
-                  numberOfRows: dashboard.rows,
-                  indexInRow: i,
-                });
+                const indexesToPaint = [...paintIndexes];
+                const currentIndex = i + dashboard.columns * z;
+                if (indexesToPaint.indexOf(currentIndex)) {
+                  indexesToPaint.push(currentIndex);
+                  setPaintIndexes(indexesToPaint);
+                }
               }}
               paintElement={
-                paintIndex?.some(
+                paintIndexes?.some(
                   (value) => value === i + dashboard.columns * z,
                 ) ?? false
               }

@@ -40,7 +40,8 @@
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": [
             "error"
-        ]
+        ],
+        "react/function-component-definition": "off"
     },
     "settings": {
         "import/resolver": {

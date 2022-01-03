@@ -1,28 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
+import Cel from './components';
 
-function App() {
+const App = () => {
+  const dashboard = { columns: 10, rows: 10 };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.tsx</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="dashboard">
+      {[...Array(dashboard.rows)].map(() => (
+        <div className="dashboard-row">
+          {[...Array(dashboard.columns)].map((v, i) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <Cel key={`cel${i}`} />
+          ))}
+        </div>
+      ))}
     </div>
   );
-}
+};
 
 export default App;

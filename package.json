@@ -64,9 +64,9 @@
   },
   "scripts": {
     "build:css": "node-sass src/ -o src/ ",
-    "watch:css": "npm run build:css && node-sass src/ -o src/ -w -r",
+    "watch:css": "node-sass src/ -o src/ -w -r",
     "start:js": "node scripts/start.js",
-    "start": "npm-run-all -p watch:css start:js",
+    "start": "npm-run-all -p start:js",
     "build:js": "node scripts/build.js",
     "build": "npm-run-all build:*",
     "test": "node scripts/test.js --env=jsdom"

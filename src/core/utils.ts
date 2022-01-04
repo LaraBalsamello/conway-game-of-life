@@ -1,4 +1,4 @@
-import { GetNeighBoursProps } from '../types';
+import { Dashboard, GetNeighBoursProps } from '../types';
 
 const getTopNeighbour = (
   currentCel: number,
@@ -104,7 +104,7 @@ export const getNeighbours = ({
   ),
 ];
 
-export const letLive = ({
+const letLive = ({
   aliveNeighbours,
   currentCellAlive,
 }: {
@@ -115,4 +115,38 @@ export const letLive = ({
     return aliveNeighbours.length === 2 || aliveNeighbours.length === 3;
   }
   return aliveNeighbours.length === 3;
+};
+
+export const processCellStates = ({
+  livingCells,
+  dashboard,
+}: {
+  livingCells: Array<number>;
+  dashboard: Dashboard;
+}): Array<number> => {
+  const modifyIndexes = [...livingCells];
+  for (let i = 0; i < dashboard.rows; i++) {
+    for (let z = 0; z < dashboard.columns; z++) {
+      const currentIndex = z + dashboard.columns * i;
+      const currentCellAlive = livingCells.indexOf(currentIndex) !== -1;
+      const aliveNeighbours = getNeighbours({
+        currentCel: currentIndex,
+        celsPerRow: dashboard.columns,
+        numberOfRows: dashboard.rows,
+        indexInRow: z,
+      }).filter((neighbour) =>
+        livingCells.some((index) => neighbour === index),
+      );
+
+      if (letLive({ aliveNeighbours, currentCellAlive }) && !currentCellAlive) {
+        modifyIndexes.push(currentIndex);
+      } else if (
+        !letLive({ aliveNeighbours, currentCellAlive }) &&
+        currentCellAlive
+      ) {
+        modifyIndexes.splice(livingCells.indexOf(currentIndex), 1);
+      }
+    }
+  }
+  return modifyIndexes;
 };

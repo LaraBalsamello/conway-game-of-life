@@ -1,55 +1,24 @@
 /* eslint-disable react/jsx-curly-newline */
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import './App.scss';
 import Button from './components/button/button';
 import Cell from './components/cell/cell';
 import Input from './components/input/input';
-import { getNeighbours, letLive } from './core/utils';
-import { Dashboard } from './types';
+import useDashboardState from './core/dashboard-state.hook';
 
 const App: FunctionComponent = () => {
-  const [dashboard, setDashboard] = useState<Dashboard>({
-    columns: 50,
-    rows: 30,
-  });
-  const [executionDelay, setExecutionDelay] = useState<number>(300);
-  const [livingCells, setLivingCells] = useState<Array<number>>([]);
-  const [stop, setStop] = useState<boolean>(true);
-  const [generation, setGeneration] = useState<number>(0);
-
-  const runSimulation = () => {
-    const modifyIndexes = [...livingCells];
-    for (let i = 0; i < dashboard.rows; i++) {
-      for (let z = 0; z < dashboard.columns; z++) {
-        const currentIndex = z + dashboard.columns * i;
-        const currentCellAlive = livingCells.indexOf(currentIndex) !== -1;
-        const aliveNeighbours = getNeighbours({
-          currentCel: currentIndex,
-          celsPerRow: dashboard.columns,
-          numberOfRows: dashboard.rows,
-          indexInRow: z,
-        }).filter((neighbour) =>
-          livingCells.some((index) => neighbour === index),
-        );
-
-        if (
-          letLive({ aliveNeighbours, currentCellAlive }) &&
-          !currentCellAlive
-        ) {
-          modifyIndexes.push(currentIndex);
-        } else if (
-          !letLive({ aliveNeighbours, currentCellAlive }) &&
-          currentCellAlive
-        ) {
-          modifyIndexes.splice(livingCells.indexOf(currentIndex), 1);
-        }
-      }
-    }
-    setTimeout(() => {
-      setLivingCells(modifyIndexes);
-      setGeneration(generation + 1);
-    }, executionDelay);
-  };
+  const {
+    dashboard,
+    setDashboard,
+    executionDelay,
+    setExecutionDelay,
+    livingCells,
+    setLivingCells,
+    stop,
+    setStop,
+    generation,
+    setGeneration,
+  } = useDashboardState();
 
   const stopSimulation = () => {
     setStop(true);
@@ -59,6 +28,18 @@ const App: FunctionComponent = () => {
     setGeneration(0);
     setLivingCells([]);
     setStop(true);
+  };
+
+  const saveBoard = () => {
+    localStorage.setItem(
+      'board',
+      JSON.stringify({
+        livingCells,
+        dashboard,
+        executionDelay,
+        generation,
+      }),
+    );
   };
 
   const handleClick = ({ i, z }: { i: number; z: number }) => {
@@ -72,12 +53,6 @@ const App: FunctionComponent = () => {
     }
     setLivingCells(newLivingCells);
   };
-
-  useEffect(() => {
-    if (!stop) {
-      runSimulation();
-    }
-  }, [stop, generation]);
 
   return (
     <div className="full-screen-container">
@@ -114,6 +89,7 @@ const App: FunctionComponent = () => {
             />
             <Button onClick={stopSimulation} text="Stop" />
             <Button onClick={reset} disabled={!stop} text="Reset" />
+            <Button onClick={saveBoard} disabled={!stop} text="Save" />
           </div>
 
           <h3>Generation # {generation}</h3>

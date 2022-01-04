@@ -1,4 +1,6 @@
-export const getTopNeighbour = (
+import { GetNeighBoursProps } from '../types';
+
+const getTopNeighbour = (
   currentCel: number,
   celsPerRow: number,
   numberOfRows: number,
@@ -11,7 +13,7 @@ export const getTopNeighbour = (
   return numberOfRows * celsPerRow - (celsPerRow - indexInRow);
 };
 
-export const getBottomNeighbour = (
+const getBottomNeighbour = (
   currentCel: number,
   celsPerRow: number,
   numberOfRows: number,
@@ -24,7 +26,7 @@ export const getBottomNeighbour = (
   return indexInRow;
 };
 
-export const getLeftNeighbour = (
+const getLeftNeighbour = (
   currentCel: number,
   celsPerRow: number,
   indexInRow: number,
@@ -36,7 +38,7 @@ export const getLeftNeighbour = (
   return currentCel + celsPerRow - 1;
 };
 
-export const getRightNeighbour = (
+const getRightNeighbour = (
   currentCel: number,
   celsPerRow: number,
   indexInRow: number,
@@ -48,7 +50,7 @@ export const getRightNeighbour = (
   return currentCel - celsPerRow + 1;
 };
 
-export const getLeftSubNeighbour = (
+const getLeftSubNeighbour = (
   currentCell: number,
   indexInRow: number,
   celsPerRow: number,
@@ -59,7 +61,7 @@ export const getLeftSubNeighbour = (
   return currentCell + celsPerRow - 1;
 };
 
-export const getRightSubNeighbour = (
+const getRightSubNeighbour = (
   currentCell: number,
   indexInRow: number,
   celsPerRow: number,
@@ -69,3 +71,37 @@ export const getRightSubNeighbour = (
   }
   return currentCell - celsPerRow + 1;
 };
+
+const getNeighbours = ({
+  currentCel,
+  celsPerRow,
+  numberOfRows,
+  indexInRow,
+}: GetNeighBoursProps): Array<number> => [
+  getBottomNeighbour(currentCel, celsPerRow, numberOfRows, indexInRow),
+  getTopNeighbour(currentCel, celsPerRow, numberOfRows, indexInRow),
+  getLeftNeighbour(currentCel, celsPerRow, indexInRow),
+  getRightNeighbour(currentCel, celsPerRow, indexInRow),
+  getLeftSubNeighbour(
+    getBottomNeighbour(currentCel, celsPerRow, numberOfRows, indexInRow),
+    indexInRow,
+    celsPerRow,
+  ),
+  getRightSubNeighbour(
+    getBottomNeighbour(currentCel, celsPerRow, numberOfRows, indexInRow),
+    indexInRow,
+    celsPerRow,
+  ),
+  getLeftSubNeighbour(
+    getTopNeighbour(currentCel, celsPerRow, numberOfRows, indexInRow),
+    indexInRow,
+    celsPerRow,
+  ),
+  getRightSubNeighbour(
+    getTopNeighbour(currentCel, celsPerRow, numberOfRows, indexInRow),
+    indexInRow,
+    celsPerRow,
+  ),
+];
+
+export default getNeighbours;

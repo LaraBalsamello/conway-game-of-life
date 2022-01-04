@@ -47,7 +47,18 @@
     "operator-linebreak": "off",
     "function-paren-newline": "off",
     "no-plusplus": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "max-depth": "error",
+    "react/no-array-index-key": "off",
+    "react/jsx-curly-newline ": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "react/require-default-props": "off",
+    "max-statements": [
+      "error",
+      {
+        "max": 12
+      }
+    ]
   },
   "settings": {
     "import/resolver": {

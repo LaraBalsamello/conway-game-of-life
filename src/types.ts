@@ -15,3 +15,8 @@ export interface GetNeighBoursProps {
   numberOfRows: number;
   indexInRow: number;
 }
+
+export interface Dashboard {
+  columns: number;
+  rows: number;
+}

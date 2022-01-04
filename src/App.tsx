@@ -2,59 +2,74 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import './App.scss';
 import Cel from './components';
-import getNeighbours from './core/utils';
-
-const letLive = ({
-  aliveNeighbours,
-  currentCellAlive,
-}: {
-  aliveNeighbours: Array<boolean>;
-  currentCellAlive: boolean;
-}): boolean => {
-  if (currentCellAlive) {
-    return aliveNeighbours.length >= 2;
-  }
-  return aliveNeighbours.length === 3;
-};
+import Button from './components/button/Button';
+import Input from './components/input/input';
+import { getNeighbours, letLive } from './core/utils';
+import { Dashboard } from './types';
 
 const App: FunctionComponent = () => {
-  const dashboard = { columns: 10, rows: 4 };
-  const [paintIndexes, setPaintIndexes] = useState<Array<number>>([]);
+  const [dashboard, setDashboard] = useState<Dashboard>({
+    columns: 50,
+    rows: 30,
+  });
+  const [executionDelay, setExecutionDelay] = useState<number>(300);
+  const [livingCells, setLivingCells] = useState<Array<number>>([]);
   const [stop, setStop] = useState<boolean>(true);
   const [generation, setGeneration] = useState<number>(0);
 
   const runSimulation = () => {
-    const modifyIndexes = [...paintIndexes];
+    const modifyIndexes = [...livingCells];
     for (let i = 0; i < dashboard.rows; i++) {
       for (let z = 0; z < dashboard.columns; z++) {
-        const currentIndex = i + dashboard.columns * z;
-        const neighbours = getNeighbours({
+        const currentIndex = z + dashboard.columns * i;
+        const currentCellAlive = livingCells.indexOf(currentIndex) !== -1;
+        const aliveNeighbours = getNeighbours({
           currentCel: currentIndex,
           celsPerRow: dashboard.columns,
           numberOfRows: dashboard.rows,
-          indexInRow: i,
-        });
-        const currentCellAlive = paintIndexes.some(
-          (value) => value === currentIndex,
+          indexInRow: z,
+        }).filter((neighbour) =>
+          livingCells.some((index) => neighbour === index),
         );
-        const aliveNeighbours = paintIndexes.map((x) =>
-          neighbours.some((neighbour) => neighbour === x),
-        );
-        if (letLive({ aliveNeighbours, currentCellAlive })) {
-          modifyIndexes.splice(currentIndex, 1);
-        } else {
+        if (
+          letLive({ aliveNeighbours, currentCellAlive }) &&
+          !currentCellAlive
+        ) {
           modifyIndexes.push(currentIndex);
+        } else if (
+          !letLive({ aliveNeighbours, currentCellAlive }) &&
+          currentCellAlive
+        ) {
+          modifyIndexes.splice(livingCells.indexOf(currentIndex), 1);
         }
       }
     }
     setTimeout(() => {
-      setPaintIndexes(modifyIndexes);
+      setLivingCells(modifyIndexes);
       setGeneration(generation + 1);
-    }, 500);
+    }, executionDelay);
   };
 
   const stopSimulation = () => {
     setStop(true);
+  };
+
+  const reset = (): void => {
+    setGeneration(0);
+    setLivingCells([]);
+    setStop(true);
+  };
+
+  const handleClick = ({ i, z }: { i: number; z: number }) => {
+    const newLivingCells = [...livingCells];
+    const currentIndex = i + dashboard.columns * z;
+    const currentlyAliveCells = livingCells.indexOf(currentIndex);
+    if (currentlyAliveCells === -1) {
+      newLivingCells.push(currentIndex);
+    } else {
+      newLivingCells.splice(currentlyAliveCells, 1);
+    }
+    setLivingCells(newLivingCells);
   };
 
   useEffect(() => {
@@ -64,53 +79,59 @@ const App: FunctionComponent = () => {
   }, [stop, generation]);
 
   return (
-    <>
-      <div className="controllers">
-        <button type="button" onClick={() => setStop(false)} disabled={!stop}>
-          Start simulation!
-        </button>
-        <button type="button" onClick={() => stopSimulation()}>
-          Stop simulation!
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            setGeneration(0);
-            setPaintIndexes([]);
-            setStop(false);
-          }}
-          disabled={!stop}
-        >
-          reset simulation!
-        </button>
-        <h3>Generation # {generation}</h3>
-      </div>
+    <div className="full-screen-container">
       <div className="dashboard">
+        <div className="controllers">
+          <Input
+            text=" Cantidad de columnas en el tablero:"
+            value={dashboard.columns}
+            onChange={({ target: { value } }) =>
+              setDashboard({ ...dashboard, columns: Number(value) })
+            }
+          />
+          <Input
+            text=" Cantidad de filas en el tablero:"
+            value={dashboard.rows}
+            onChange={({ target: { value } }) =>
+              setDashboard({ ...dashboard, rows: Number(value) })
+            }
+          />
+          <Input
+            text="Tiempo de ejecucíon de la simulación:"
+            value={executionDelay}
+            onChange={({ target: { value } }) =>
+              setExecutionDelay(Number(value))
+            }
+          />
+        </div>
+        <div className="controllers-container">
+          <div className="buttons">
+            <Button
+              onClick={() => setStop(false)}
+              disabled={!stop}
+              text="Start"
+            />
+            <Button onClick={stopSimulation} text="Stop" />
+            <Button onClick={reset} disabled={!stop} text="Reset" />
+          </div>
+
+          <h3>Generation # {generation}</h3>
+        </div>
         {[...Array(dashboard.rows)].map((x, z) => (
-          <div className="dashboard-row">
+          <div className="dashboard-row" key={z}>
             {[...Array(dashboard.columns)].map((v, i) => (
-              // eslint-disable-next-line react/no-array-index-key
               <Cel
-                onClickHandler={() => {
-                  const indexesToPaint = [...paintIndexes];
-                  const currentIndex = i + dashboard.columns * z;
-                  if (indexesToPaint.indexOf(currentIndex)) {
-                    indexesToPaint.push(currentIndex);
-                    setPaintIndexes(indexesToPaint);
-                  }
-                }}
-                paintElement={
-                  paintIndexes?.some(
-                    (value) => value === i + dashboard.columns * z,
-                  ) ?? false
-                }
+                onClickHandler={() => handleClick({ i, z })}
+                paintElement={livingCells?.some(
+                  (value) => value === i + dashboard.columns * z,
+                )}
                 key={`cel${i + z}`}
               />
             ))}
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

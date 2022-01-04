@@ -72,7 +72,7 @@ const getRightSubNeighbour = (
   return currentCell - celsPerRow + 1;
 };
 
-const getNeighbours = ({
+export const getNeighbours = ({
   currentCel,
   celsPerRow,
   numberOfRows,
@@ -104,4 +104,15 @@ const getNeighbours = ({
   ),
 ];
 
-export default getNeighbours;
+export const letLive = ({
+  aliveNeighbours,
+  currentCellAlive,
+}: {
+  aliveNeighbours: Array<number>;
+  currentCellAlive: boolean;
+}): boolean => {
+  if (currentCellAlive) {
+    return aliveNeighbours.length === 2 || aliveNeighbours.length === 3;
+  }
+  return aliveNeighbours.length === 3;
+};

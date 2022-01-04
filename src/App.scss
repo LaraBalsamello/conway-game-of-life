@@ -1,10 +1,29 @@
 .dashboard {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  width: fit-content;
+  position: relative;
   .dashboard-row {
     display: flex;
     justify-content: center;
+  }
+}
+
+.controllers {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-left: 0;
+}
+
+.full-screen-container {
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 10rem 0rem;
+  align-items: center;
+  .controllers-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
   }
 }

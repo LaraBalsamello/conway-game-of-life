@@ -1,7 +1,7 @@
 import './styles.scss';
 import React, { FunctionComponent } from 'react';
 
-const Cel: FunctionComponent<{
+const Cell: FunctionComponent<{
   onClickHandler: () => void;
   paintElement: boolean;
 }> = ({ onClickHandler, paintElement }) => (
@@ -13,4 +13,4 @@ const Cel: FunctionComponent<{
   />
 );
 
-export default Cel;
+export default Cell;

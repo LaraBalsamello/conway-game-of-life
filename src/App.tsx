@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-curly-newline */
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import './App.scss';
-import Cel from './components';
-import Button from './components/button/Button';
+import Button from './components/button/button';
+import Cell from './components/cell/cell';
 import Input from './components/input/input';
 import { getNeighbours, letLive } from './core/utils';
 import { Dashboard } from './types';
@@ -31,6 +31,7 @@ const App: FunctionComponent = () => {
         }).filter((neighbour) =>
           livingCells.some((index) => neighbour === index),
         );
+
         if (
           letLive({ aliveNeighbours, currentCellAlive }) &&
           !currentCellAlive
@@ -63,11 +64,11 @@ const App: FunctionComponent = () => {
   const handleClick = ({ i, z }: { i: number; z: number }) => {
     const newLivingCells = [...livingCells];
     const currentIndex = i + dashboard.columns * z;
-    const currentlyAliveCells = livingCells.indexOf(currentIndex);
-    if (currentlyAliveCells === -1) {
+    const currentlyAliveCell = livingCells.indexOf(currentIndex);
+    if (currentlyAliveCell === -1) {
       newLivingCells.push(currentIndex);
     } else {
-      newLivingCells.splice(currentlyAliveCells, 1);
+      newLivingCells.splice(currentlyAliveCell, 1);
     }
     setLivingCells(newLivingCells);
   };
@@ -120,12 +121,12 @@ const App: FunctionComponent = () => {
         {[...Array(dashboard.rows)].map((x, z) => (
           <div className="dashboard-row" key={z}>
             {[...Array(dashboard.columns)].map((v, i) => (
-              <Cel
+              <Cell
                 onClickHandler={() => handleClick({ i, z })}
                 paintElement={livingCells?.some(
                   (value) => value === i + dashboard.columns * z,
                 )}
-                key={`cel${i + z}`}
+                key={`cell${i + z}`}
               />
             ))}
           </div>

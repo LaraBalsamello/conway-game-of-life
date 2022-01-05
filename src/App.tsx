@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-curly-newline */
 import React, { FunctionComponent } from 'react';
-import './App.scss';
+import './styles.scss';
 import Button from './components/button/button';
 import Cell from './components/cell/cell';
 import Input from './components/input/input';
@@ -56,6 +56,7 @@ const App: FunctionComponent = () => {
 
   return (
     <div className="full-screen-container">
+      <h1>Conway&apos;s game of life</h1>
       <div className="dashboard">
         <div className="controllers">
           <Input
@@ -92,7 +93,7 @@ const App: FunctionComponent = () => {
             <Button onClick={saveBoard} disabled={!stop} text="Save" />
           </div>
 
-          <h3>Generation # {generation}</h3>
+          <h4>Generación #{generation}</h4>
         </div>
         {[...Array(dashboard.rows)].map((x, z) => (
           <div className="dashboard-row" key={z}>

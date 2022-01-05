@@ -1,0 +1,20 @@
+@import '../../core/styles/colors.scss';
+
+.action-buttons {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  color: $purple;
+  border-radius: 5px;
+  border: 1px solid $purple;
+  background-color: $black;
+  &:nth-child(2n) {
+    margin: 0 0.5rem;
+  }
+  &:hover {
+    filter: brightness(400%);
+  }
+  &:disabled {
+    filter: brightness(50%);
+  }
+}

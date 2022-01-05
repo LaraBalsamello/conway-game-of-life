@@ -1,6 +1,9 @@
+@import './core/styles/colors.scss';
+
 .dashboard {
   width: fit-content;
   position: relative;
+  margin-bottom: 3rem;
   .dashboard-row {
     display: flex;
     justify-content: center;
@@ -15,10 +18,21 @@
 }
 
 .full-screen-container {
+  background-color: $black;
   display: flex;
   flex-direction: column;
-  padding: 5rem 10rem 0rem;
+  padding: 2rem 10rem 0rem;
   align-items: center;
+  font-family: 'Press Start 2P', cursive;
+  h1 {
+    margin-bottom: 3rem;
+    font-size: 25px;
+    color: invert($color: $purple);
+  }
+  h4 {
+    font-weight: 100;
+    color: $lightBlue;
+  }
   .controllers-container {
     display: flex;
     flex-direction: row;

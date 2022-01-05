@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.scss';
 
 interface ButtonProps {
   onClick: () => void;
@@ -7,7 +8,12 @@ interface ButtonProps {
 }
 
 const Button = ({ onClick, disabled = false, text }: ButtonProps) => (
-  <button type="button" onClick={onClick} disabled={disabled}>
+  <button
+    className="action-buttons"
+    type="button"
+    onClick={onClick}
+    disabled={disabled}
+  >
     {text}
   </button>
 );

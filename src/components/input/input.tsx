@@ -8,7 +8,7 @@ interface InputProps {
 }
 
 const Input = ({ text, value, onChange }: InputProps) => (
-  <div className="input-container">
+  <div data-testid="container-input" className="input-container">
     <label>{text}</label>
     <input type="number" value={value} onChange={onChange} />
   </div>

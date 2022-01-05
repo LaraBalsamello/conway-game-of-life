@@ -72,6 +72,9 @@ const getRightSubNeighbour = (
   return currentCell - celsPerRow + 1;
 };
 
+/**
+ * Function to calculate  cell neighbours. Meaning all cells that "touch" the current cell.
+ */
 export const getNeighbours = ({
   currentCel,
   celsPerRow,
@@ -117,6 +120,19 @@ const letLive = ({
   return aliveNeighbours.length === 3;
 };
 
+/**
+ * Function to process each cell state.
+ * We first pick up the currently living cells in the modifyIndexes var.
+ * Later we proceed on iterating each row, and inside each row we iterate this column.
+ * This could be different but to avoid a code refactor that would take too long it was decided
+ * to make it like this to recycle logic in getNeighbours().
+ * After that for each iteration we calculate currentIndex the same way we do in handleClick()
+ * then we check if current cell is living by checking if it exists in the param livingCells.
+ * after that we get all cell neighbours and check the same
+ * way we did with the current cell if they are alive or not.
+ * After all this we decide if cell has to leave or not and we push it to the modify indexes
+ * that the function will return and would be saved in the hook that controls the board state.
+ */
 export const processCellStates = ({
   livingCells,
   dashboard,

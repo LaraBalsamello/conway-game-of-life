@@ -58,7 +58,9 @@
       {
         "max": 12
       }
-    ]
+    ],
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off"
   },
   "settings": {
     "import/resolver": {

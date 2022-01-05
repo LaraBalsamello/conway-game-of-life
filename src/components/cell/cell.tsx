@@ -9,6 +9,7 @@ const Cell: FunctionComponent<{
   <button
     onClick={onClickHandler}
     type="button"
+    data-testid="cell"
     className={`round-container ${paintElement && 'paint'}`}
   />
 );

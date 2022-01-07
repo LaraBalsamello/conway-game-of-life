@@ -160,7 +160,7 @@ export const processCellStates = ({
         !letLive({ aliveNeighbours, currentCellAlive }) &&
         currentCellAlive
       ) {
-        modifyIndexes.splice(livingCells.indexOf(currentIndex), 1);
+        modifyIndexes.splice(modifyIndexes.indexOf(currentIndex), 1);
       }
     }
   }

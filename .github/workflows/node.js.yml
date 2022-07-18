@@ -25,7 +25,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+        env:
+          NAME: ${{ secrets.CONFIG_USER_NAME }}
+          EMAIL: ${{ secrets.CONFIG_USER_EMAIL }}
       - run: npm i
       - run: npm test
-      - run: git config user.name --global "${{secrets.CONFIG_USER_NAME}}" && git config --global user.name "${{secrets.CONFIG_USER_EMAIL}}"
+      - run: git config user.name "$NAME" && git config user.name "$EMAIL"
       - run: npm run deploy

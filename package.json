@@ -2,6 +2,7 @@
   "name": "conway-game-of-life",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://larabalsamello.github.io/conway-game-of-life/",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
@@ -70,7 +71,7 @@
     "build:js": "node scripts/build.js",
     "build": "npm-run-all build:*",
     "test": "node scripts/test.js --env=jsdom"
-  },
+    },
   "eslintConfig": {
     "extends": [
       "react-app",

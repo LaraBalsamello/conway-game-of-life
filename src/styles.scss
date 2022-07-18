@@ -1,0 +1,73 @@
+@import './core/styles/colors.scss';
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-thumb {
+  background: #3efde4;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b3afb3;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+  border-radius: 0px;
+  box-shadow: inset 0px 0px 0px 0px #f0f0f0;
+}
+
+.dashboard {
+  width: fit-content;
+  position: relative;
+  margin-bottom: 3rem;
+  .dashboard-row {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.controllers {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-left: 0;
+}
+
+.full-screen-container {
+  background-color: $black;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 10rem 0rem;
+  align-items: center;
+  font-family: 'Press Start 2P', cursive;
+  overflow: scroll;
+  h1 {
+    margin-bottom: 3rem;
+    font-size: 25px;
+    color: invert($color: $purple);
+  }
+  h4 {
+    font-weight: 100;
+    color: $lightBlue;
+  }
+  .float-relative {
+    position: relative;
+  }
+  .float {
+    position: absolute;
+    font-size: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+  .controllers-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+}

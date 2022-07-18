@@ -1,0 +1,15 @@
+@import '../../core/styles/colors.scss';
+
+.round-container {
+  border: 1px solid invert($color: $purple);
+  border-radius: 100%;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  margin: 1px;
+  background-color: $black;
+}
+
+.paint {
+  background-color: invert($color: $purple);
+}

@@ -1,6 +1,6 @@
 # Conway's game of life
 
-#### Hi there! 
+#### Hi there!
 
 ### To run project please follow this steps:
 

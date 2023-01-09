@@ -33,3 +33,4 @@ jobs:
         env:
           NAME: ${{ secrets.CONFIG_USER_NAME }}
           EMAIL: ${{ secrets.CONFIG_USER_EMAIL }}
+          

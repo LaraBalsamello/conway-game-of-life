@@ -31,6 +31,6 @@ jobs:
       - run: git config user.email $EMAIL
       - run: npm run deploy
         env:
-          NAME: ${{ secrets.CONFIG_USER_NAME }}
-          EMAIL: ${{ secrets.CONFIG_USER_EMAIL }}
+          NAME: ${{ secrets.NAME }}
+          EMAIL: ${{ secrets.EMAIL }}
           

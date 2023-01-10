@@ -27,10 +27,4 @@ jobs:
           cache: 'npm'
       - run: npm i
       - run: npm test
-      - run: git config user.name $NAME
-      - run: git config user.email $EMAIL
       - run: npm run deploy
-        env:
-          NAME: ${{ secrets.NAME }}
-          EMAIL: ${{ secrets.EMAIL }}
-          

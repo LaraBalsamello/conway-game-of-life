@@ -73,7 +73,7 @@
     "build": "npm-run-all build:*",
     "test": "node scripts/test.js --env=jsdom",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build "
     },
   "eslintConfig": {
     "extends": [

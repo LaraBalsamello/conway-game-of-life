@@ -27,4 +27,11 @@ jobs:
           cache: 'npm'
       - run: npm i
       - run: npm test
-      - run: npm run deploy
+      - name: Deploy
+        env:
+          MY_EMAIL: lara.balsamello@gmail.com
+          MY_NAME: LaraBalsamello
+        run:
+          git config --global user.email $MY_EMAIL
+          git config --global user.name $MY_NAME
+          npm run deploy

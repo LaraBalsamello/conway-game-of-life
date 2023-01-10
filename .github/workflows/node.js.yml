@@ -29,9 +29,8 @@ jobs:
       - run: npm test
       - name: Deploy
         env:
-          MY_EMAIL: lara.balsamello@gmail.com
-          MY_NAME: LaraBalsamello
-        run:
-          git config --global user.email $MY_EMAIL
-          git config --global user.name $MY_NAME
-          npm run deploy
+          EMAIL: lara.balsamello@gmail.com
+          NAME: LaraBalsamello
+        run: git config --global user.email $EMAIL
+        run: git config --global user.name $NAME
+        run: npm run deploy

@@ -101,7 +101,7 @@ const App: FunctionComponent = () => {
             }
           />
           <Input
-            text="Tiempo de ejecucíon de la simulación:"
+            text="Tiempo de ejecucíon de la simulación: "
             value={executionDelay}
             onChange={({ target: { value } }) =>
               setExecutionDelay(Number(value))

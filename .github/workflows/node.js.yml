@@ -35,6 +35,6 @@ jobs:
         env:
           EMAIL: lara.balsamello@gmail.com
           NAME: LaraBalsamello
-      - run: git config user.email $EMAIL
-      - run: git config user.name $NAME
+      - run: git config user.email ${{ secrets.USER }}
+      - run: git config user.name ${{ secrets.NAME }}
       - run: npm run deploy

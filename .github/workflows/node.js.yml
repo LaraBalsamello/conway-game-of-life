@@ -28,6 +28,7 @@ jobs:
       - run: npm i
       - run: npm test
       - name: Deploy
+        uses: actions/checkout@v3
         env:
           EMAIL: lara.balsamello@gmail.com
           NAME: LaraBalsamello

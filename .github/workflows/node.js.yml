@@ -28,7 +28,10 @@ jobs:
       - run: npm i
       - run: npm test
       - name: Deploy
-        uses: actions/checkout@v3
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
         env:
           EMAIL: lara.balsamello@gmail.com
           NAME: LaraBalsamello

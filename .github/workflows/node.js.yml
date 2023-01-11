@@ -1,0 +1,33 @@
+## ACTIONs WORKFLOW
+
+name: Build and deploy 
+
+on:
+  push:
+    branches:
+      - master
+    pull_request:
+      branches: ['master']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@master
+        with:
+          persist-credentials: false
+
+      - name: Install 🔧
+        run: npm install
+
+      - name: Build 🏗️
+        run: |
+          npm clean
+          npm build
+      - name: Deploy to GH Pages 🚀
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: dist
+        run: npm run deploy

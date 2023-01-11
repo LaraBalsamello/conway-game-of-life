@@ -32,6 +32,7 @@ jobs:
         env:
           EMAIL: lara.balsamello@gmail.com
           NAME: LaraBalsamello
-      - run: git config user.email $EMAIL
+      - run: |
+            git config user.email $EMAIL
             git config user.name $NAME
             npm run deploy
